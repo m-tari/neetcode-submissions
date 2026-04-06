@@ -1,0 +1,25 @@
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+        
+        sortedHand = sorted(hand)
+        Ngroups = len(sortedHand) // groupSize
+        mp = {}
+
+        for h in sortedHand:
+            mp[h] = mp.get(h, 0) + 1
+
+        for group in range(Ngroups):
+            # Pick smallest available value:
+            for h in sortedHand:
+                if mp[h]:
+                    init = h
+                    break
+            
+            for num in range(init, init + groupSize):
+                if num in mp and mp[num]:
+                    mp[num] -= 1
+                else:
+                    return False
+
+        
+        return True
